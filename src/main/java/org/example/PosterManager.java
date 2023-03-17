@@ -2,10 +2,14 @@ package org.example;
 
 public class PosterManager {
     private PosterItem[] items = new PosterItem[0];
-    private int last = 5;
+    private int limit;
 
-    public PosterManager(int last) {
-        this.last = last;
+    public PosterManager() {
+        this.limit = 5;
+    }
+
+    public PosterManager(int limit) {
+        this.limit = limit;
     }
 
     public void save(PosterItem item) {
@@ -17,28 +21,21 @@ public class PosterManager {
         items = tmp;
     }
 
-    public PosterItem[] getItems() {
-        return items;
-    }
-
     public PosterItem[] findAll() {
-        PosterItem[] items = getItems();
-
         return items;
     }
 
     public PosterItem[] findLast() {
         int resultLength;
-        if (items.length >= last) {
-            resultLength = last;
-        } else {
+        if (items.length < limit) {
             resultLength = items.length;
+        } else {
+            resultLength = limit;
         }
-
-        PosterItem[] result = new PosterItem[resultLength];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = items[items.length - 1 - i];
+        PosterItem[] tmp = new PosterItem[resultLength];
+        for (int i = 0; i < tmp.length; i++) {
+            tmp[i] = items[items.length - 1 - i];
         }
-        return result;
+        return tmp;
     }
 }
